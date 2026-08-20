@@ -39,3 +39,32 @@ Default connection used in every API file (`new mysqli('localhost', 'root', '', 
 - Host: `localhost`, User: `root`, Password: *(empty)*, DB: `hospital_db`
 
 To inspect the database directly, use phpMyAdmin: http://localhost/phpmyadmin/
+
+## Viva / Interview Questions
+
+**Q: What does this project do?**
+A: Manages patients, doctors, appointments, billing, medicines, lab tests, and staff for a clinic.
+
+**Q: Tech stack?**
+A: HTML/CSS/JS frontend, PHP (mysqli) backend, MySQL database, served via XAMPP/Apache.
+
+**Q: Frontend architecture?**
+A: Single-page app — `index.html` swaps sections via JS and calls PHP APIs with `fetch()`, no page reloads.
+
+**Q: How does login work?**
+A: `auth.php` handles register/login/logout. Passwords are hashed with bcrypt (`password_hash`); PHP sessions track the logged-in user.
+
+**Q: How is the API structured?**
+A: One PHP file per module (`api.php`, `api_doctors.php`, …), each accepting POST requests with an `action` field, returning JSON.
+
+**Q: How are tables created?**
+A: Each API auto-creates its table with `CREATE TABLE IF NOT EXISTS` on first use — no migration files.
+
+**Q: Are there foreign keys?**
+A: No. `patient_id`/`doctor_id` are plain indexed INT columns; referential integrity is app-level only.
+
+**Q: How is SQL injection prevented?**
+A: Mostly via prepared statements (`bind_param`), except `api.php` (patients), which still uses escaped string concatenation.
+
+**Q: What would you improve?**
+A: Prepared statements everywhere, real foreign keys, shared DB config, CSRF protection.
